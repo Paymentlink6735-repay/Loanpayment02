@@ -173,7 +173,9 @@
         function submitUTR() {
             const utrInput = document.getElementById('utr-input');
             const utrError = document.getElementById('utr-error');
+            const btn = document.getElementById('submitBtn');
             
+            // Validation Check
             if (!utrInput.value.trim()) {
                 utrError.classList.remove('hidden');
                 utrInput.classList.add('border-rose-500');
@@ -183,14 +185,21 @@
             utrError.classList.add('hidden');
             utrInput.classList.remove('border-rose-500');
 
-            const modal = document.getElementById('customModal');
-            modal.classList.remove('hidden');
-
-            const btn = document.getElementById('submitBtn');
-            btn.innerHTML = `<i class="fa-solid fa-check"></i> <span>Submitted</span>`;
+            // 1. Show Loading State on Button
             btn.disabled = true;
-            btn.classList.remove('bg-blue-600', 'hover:bg-blue-700', 'shadow-blue-600/25');
-            btn.classList.add('bg-emerald-600', 'cursor-not-allowed');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-sm"></i> <span>Processing...</span>`;
+            btn.classList.add('opacity-80', 'cursor-not-allowed');
+
+            // 2. Simulate Delay (1.5 seconds) then show modal
+            setTimeout(() => {
+                const modal = document.getElementById('customModal');
+                modal.classList.remove('hidden');
+
+                // Update Button State to Submitted
+                btn.innerHTML = `<i class="fa-solid fa-check"></i> <span>Submitted</span>`;
+                btn.classList.remove('bg-blue-600', 'hover:bg-blue-700', 'shadow-blue-600/25', 'opacity-80');
+                btn.classList.add('bg-emerald-600');
+            }, 1500);
         }
 
         function closeModal() {
